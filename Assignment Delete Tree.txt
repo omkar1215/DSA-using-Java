@@ -1,0 +1,211 @@
+Assignment Delete Tree
+Ans:-package deleteTree;
+
+
+public class DeleteTree {
+	private DeleteTNode root;
+
+	public DeleteTNode createNode(int val) {
+		DeleteTNode newNode = new DeleteTNode();
+		newNode.setData(val);
+		newNode.setLeft(null);
+		newNode.setRight(null);
+		return newNode;
+	}
+
+	public void addNode(int val) {
+		DeleteTNode newNode = createNode(val);
+		DeleteTNode temp = root;
+		if (root == null) {
+			root = newNode;
+		} else if (root != null) {
+			temp = root;
+			while (true) {
+
+				if (val < temp.getData()) {
+					if (temp.getLeft() == null) {
+						temp.setLeft(newNode);
+						break;
+					} else {
+						temp = temp.getLeft();
+					}
+				} else if (val > temp.getData()) {
+					if (temp.getRight() == null) {
+						temp.setRight(newNode);
+						break;
+					} else {
+						temp = temp.getRight();
+					}
+				} else {
+					System.err.println("Duplicate data........Please Enter valid Data....");
+					break;
+				}
+			}
+		} else {
+			System.err.println("Tree Not found....!!!!!!!!");
+		}
+	}
+
+	public void preorderdisplay(DeleteTNode root) {
+		DeleteTNode temp = root;
+		if (root != null) {
+			System.out.print(" " + temp.getData() + ",");
+			preorderdisplay(temp.getLeft());
+			preorderdisplay(temp.getRight());
+		}
+	}
+
+	public void Inorderdisplay(DeleteTNode root) {
+		DeleteTNode temp = root;
+		if (root != null) {
+			Inorderdisplay(temp.getLeft());
+			System.out.print(" " + temp.getData() + ",");
+			Inorderdisplay(temp.getRight());
+		}
+	}
+
+	public void postorderdisplay(DeleteTNode root) {
+		DeleteTNode temp = root;
+		if (root != null) {
+			postorderdisplay(temp.getLeft());
+			postorderdisplay(temp.getRight());
+			System.out.print(" " + temp.getData() + ",");
+
+		}
+	}
+
+	public DeleteTNode getRoot() {
+		return root;
+	}
+
+	public void deleteTree(int value) {
+		DeleteTNode temp = root;
+		DeleteTNode tag = root;
+		if (root == null) {
+			System.out.println("Tree is Null.......!!!!");
+		} else {
+			int flag = 0;
+			while (temp != null) {
+				if (temp.getData() == value) {
+					flag = 1;
+					break;
+				} else if (value < temp.getData()) {
+					tag = temp;
+					temp = temp.getLeft();
+				} else if (value > temp.getData()) {
+					tag = temp;
+					temp = temp.getRight();
+				}
+			}
+
+			if (flag == 1) {
+				// type1 Leaf Node
+				if (temp.getLeft() == null && temp.getRight() == null) {
+					if (tag.getLeft() == temp) {
+						tag.setLeft(null);
+					} else {
+						tag.setRight(null);
+					}
+					temp.setLeft(null);
+				}
+				// type2 LHS Only
+				else if (temp.getLeft() != null && temp.getRight() == null) {
+					if (tag.getLeft() == temp) {
+						tag.setLeft(temp.getLeft());
+					} else {
+						tag.setRight(temp.getLeft());
+					}
+					temp.setLeft(null);
+				}
+				// type3 RHS Only
+				else if (temp.getRight() != null && temp.getLeft() == null) {
+					if (tag.getLeft() == temp) {
+						tag.setLeft(temp.getRight());
+					} else {
+						tag.setRight(temp.getRight());
+					}
+					temp.setLeft(null);
+				}
+				// type 4 Both LHS & RHS
+				else if (temp.getRight() != null && temp.getLeft() != null) {
+
+					DeleteTNode tag2 = temp.getRight();
+					while (tag2.getLeft() != null) {
+						tag2 = tag2.getLeft();
+					}
+					if (tag.getLeft() == temp) {
+						tag.setLeft(temp.getRight());
+					} else {
+						tag.setRight(temp.getRight());
+					}
+					tag2.setLeft(temp.getLeft());
+					temp.setLeft(null);
+					temp.setRight(null);
+
+				}
+
+			}
+
+		}
+
+	}
+}
+##########################################################################################################################################
+Client.java
+package deleteTree;
+
+import java.util.Scanner;
+
+public class DeleteTreeMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DeleteTree bst = new DeleteTree();
+
+		Scanner sc = new Scanner(System.in);
+		int value;
+		int option = 0;
+
+		do {
+			System.out.println("\n\t---------Menu---------");
+			System.out.println("1:Add" + "\n2:Delete" + "\n3:Pre-order" + "\n4:In-order" + "\n5:Post-order" +
+
+					"\n0:EXIT");
+			System.out.println("Enter your choice:: ");
+			option = sc.nextInt();
+
+			switch (option) {
+			case 1:
+				System.out.println("\nEnter value to add: ");
+				value = sc.nextInt();
+				bst.addNode(value);
+				break;
+			case 2:
+				System.out.println("\nEnter value to be deleted: ");
+				value = sc.nextInt();
+				bst.deleteTree(value);
+				break;
+			case 3:
+				System.out.println("\t----------Pre-Order-----------");
+				bst.preorderdisplay(bst.getRoot());
+				System.out.println("\n-----------------------------");
+				break;
+			case 4:
+				System.out.println("\t----------In-Order-----------");
+				bst.Inorderdisplay(bst.getRoot());
+				System.out.println("\n-----------------------------");
+				break;
+			case 5:
+				System.out.println("\t----------Post-Order-----------");
+				bst.postorderdisplay(bst.getRoot());
+				System.out.println("\n-----------------------------");
+				break;
+			case 0:
+				System.exit(0);
+
+			}// switch
+
+		} while (option != 0);
+	}
+
+}

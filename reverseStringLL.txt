@@ -1,0 +1,93 @@
+//Node.java
+package reverse;
+
+public class Node {
+	private char data;
+	private Node next;
+	public Node() {
+		data=' ';
+		next=null;
+	}
+	public char getData() {
+		return data;
+	}
+	public void setData(char data) {
+		this.data = data;
+	}
+	public Node getNext() {
+		return next;
+	}
+	public void setNext(Node next) {
+		this.next = next;
+	}
+	
+}
+
+
+//Stack.java
+package reverse;
+
+public class Stack {
+	private Node top;
+	public Stack() {
+		top=null;
+	}
+	public boolean isEmpty() {
+		return top==null;
+	}
+	public void Push(char val) {
+		Node newnode=new Node();
+		newnode.setData(val);
+		newnode.setNext(null);
+		if(top==null) {
+			top=newnode;
+		}else {
+			newnode.setNext(top);
+			top=newnode;
+		}
+	}
+	public void Display() {
+		if(top==null) {
+			System.out.println("Stack is Empty");
+		}else {
+			Node temp=top;
+			while(temp!=null) {
+				System.out.print(temp.getData()+" ");
+				temp=temp.getNext();
+			}
+		}
+	}
+	public char Pop() {
+		char val=' ';
+		if(isEmpty()) {
+			System.out.println("Stack is Empty");
+		}else {
+			val=top.getData();
+			Node temp=top;
+			top=top.getNext();
+			temp.setNext(null);
+		}
+		return val;
+	}
+	
+}
+
+
+//ReverseStringLL.java
+package reverse;
+
+import java.util.Scanner;
+
+public class ReverseStringLL {
+	public static void main(String[] agrs) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter String: ");
+		String str=sc.nextLine();
+		Stack stack=new Stack();
+		for(int i=0;i<str.length();i++) {
+			stack.Push(str.charAt(i));
+		}
+		stack.Display();
+		
+	}
+}

@@ -1,0 +1,368 @@
+//Node.java
+package linkedlist;
+
+public class Node {
+ private int data;
+ private Node next;
+	public Node() {
+		data = 0;
+		next = null;
+	}
+	public int getData() {
+		return data;
+	}
+	public void setData(int data) {
+		this.data = data;
+	}
+	public Node getNext() {
+		return next;
+	}
+	public void setNext(Node next) {
+		this.next = next;
+	}
+	
+
+}
+
+
+//singlylinkedList
+package linkedlist;
+
+import java.util.Scanner;
+
+public class singlylinklist {
+	private Node head;
+
+	public singlylinklist() {
+		head = null;
+	}
+	public void sethead(Node newnode) {
+		head = newnode;
+	}
+	public Node createnode() {
+		Node newnode = new Node();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter the data ");
+		newnode.setData(sc.nextInt());
+		newnode.setNext(null);
+		return newnode;
+	}
+	
+	public void addatfront() {
+		Node newnode = createnode();
+		
+		if(head == null) {
+			head = newnode;
+		}
+		else {
+			newnode.setNext(head);
+			head = newnode;
+		}
+				
+	
+	}
+	public void addatend() {
+		Node newnode = createnode();
+		Node temp = new Node();
+		if(head ==null) {
+			head = newnode;
+		}
+		else {
+			temp = head;
+			while(temp.getNext() != null) {
+				temp = temp.getNext();
+			}
+			temp.setNext(newnode);
+		}
+	}
+	
+	public void addatmid(int val) {
+		Node newnode = createnode();
+		Node temp = new Node();
+		
+		if(head == null) {
+			head = newnode;
+		}
+		else if(head.getNext()==null) {
+			if(head.getData()==val) {
+				head.setNext(newnode);
+			}
+			else {
+				System.out.println("value not found in linklist ");
+			}
+		}
+		else {
+			temp = head;
+			while(temp.getNext()!=null && temp.getData() != val) {
+				temp = temp.getNext();
+			}
+			if(temp.getNext()!=null) {
+				newnode.setNext(temp.getNext());
+				temp.setNext(newnode);				
+			}
+			else
+			{
+				System.out.println("\tError::Node not exists....!!!!");
+			}
+			}
+		
+	}
+	public void count() {
+		Node temp  = new Node();
+		temp = head;
+		int count = 1;
+		while(temp.getNext() != null) {
+		count++;
+		temp = temp.getNext();
+		}
+		System.out.println("no. of count : "+count);
+	}
+	
+	
+	
+	
+	
+	
+	public void deleteatstart() {
+		if(head == null) {
+			System.out.println("empty linked list");
+		}
+		else if(head.getNext()==null){
+			head = null;
+		}
+		else {
+			Node temp = new Node();
+			temp = head;
+			head = head.getNext();
+			temp.setNext(null);
+			temp = null;
+		}
+	}
+	public void deleteatend() {
+		Node temp;
+		Node tag;
+		if(head == null) {
+			System.out.println("empty linked list");
+		}
+		else if(head.getNext()==null) {
+			head = null;
+		}
+		
+		else {
+			temp = new Node();
+			tag = new Node();
+			temp = head;
+			while(temp.getNext()!=null) {
+				tag = temp;
+				temp = temp.getNext();
+				
+			}
+		tag.setNext(null);
+		temp = null;
+		}
+	}
+	public void deleteatmid(int val){
+		Node temp = new Node();
+		Node tag = new Node();
+		if(head == null) {
+			System.out.println("empty link list");
+		}
+		else if(head.getNext()==null) {
+			if(head.getData()==val) {
+				head = null;
+			}
+			else {
+				System.out.println("value is not found");
+			}
+		}
+		else {
+			temp = head;
+			while(temp.getNext()!=null && temp.getData()!=val) {
+				tag = temp;
+				temp = temp.getNext();			}
+		}
+		if(temp.getNext()==null) {
+			System.out.println("value is not found");
+		}
+		else {
+			tag.setNext(temp.getNext());
+			temp.setNext(null);
+			temp = null;
+		}
+		
+	}
+	public void update(int val,int newval){
+		Node temp = new Node();
+		if(head == null) {
+			System.out.println("empty link list");
+		}
+		else if(head.getNext()==null) {
+			if(head.getData()==val) {
+				head.setData(newval);
+			}
+			else {
+				System.out.println("value is not found");
+			}
+		}
+		else {
+			temp = head;
+			while(temp.getNext()!=null && temp.getData()!=val) {
+				temp = temp.getNext();			}
+		}
+		if(temp.getNext()==null) {
+			System.out.println("value is not found");
+		}
+		else {
+			temp.setData(newval);
+		}
+		
+	}
+	public void reverse() {
+		Node prev=head;
+		Node curr=null;
+		Node next=null;
+		
+		if(prev!=null)
+			curr  = head.getNext();
+		if(curr!=null || curr.getNext()!=null)
+			next = curr.getNext();
+		
+		while(curr!=null)
+		{
+			curr.setNext(prev);  
+			prev= curr;
+			curr = next;
+			if(next!=null)   
+			    next = next.getNext();
+		}
+		head.setNext(null);
+		head = prev; 
+		
+	}
+	public void printReverse()
+	{
+		int length=0;
+		Node temp=head;
+		while(temp!=null)
+			{
+			length++;
+			temp=temp.getNext();
+			}
+		for(int i=length-1;i>=0;i--)
+		{
+			Node curr=head;
+			int count=0;
+			while(count<i) {
+				curr=curr.getNext();
+			count++;
+			}
+			System.out.print(curr.getData()+"->");
+		}
+
+	}
+	
+	public void display() {
+		System.out.println("\n-------------------------------\n");
+		Node temp = new Node();
+		if(head == null) {
+			System.out.println("error//");
+		}
+		else {
+			temp = head;
+			while(temp!=null) {
+				System.out.print(temp.getData()+" -> ");
+				temp = temp.getNext();
+			}
+			System.out.println("null");
+		}
+		System.out.println("\n-------------------------------\n");
+			
+	}
+
+}
+
+
+//singlyLinkedmain
+package linkedlist;
+
+import java.util.Scanner;
+
+public class siglelinkmain {
+
+	public static void main(String args[]) {
+		singlilinklist sl = new singlilinklist();
+		Scanner sc = new Scanner(System.in);
+		int choice;
+		do{
+			System.out.println("\n------------Menu---------");
+			System.out.println("1:Start"+
+			                  "\n"+"2:Add At Start"+
+					          "\n"+"3:Add At end"+
+					          "\n"+ "4:Add At Mid"+
+					          "\n"+ "5:count node"+
+					          "\n"+"6: to delete at start"+
+					          "\n"+"7: to delete at end"+
+					          "\n"+"8: to delete at mid"+
+					          "\n"+"9: to update"+
+					          "\n"+"10: to reverse"+
+					          "\n"+"11: to printreverse"+					          
+					          "\n"+"15:Display"+
+			                  "\n"+"0:EXIT");
+			System.out.println("Enter your choice:: ");
+			choice = sc.nextInt();
+			
+			switch(choice){
+				case 1: 
+					Node newnode = sl.createnode();
+					sl.sethead(newnode);
+					System.out.println("singly linklist created ");
+					break;
+				case 2:
+					sl.addatfront();
+					break;
+				case 3:
+					sl.addatend();
+					break;
+				case 4:
+					System.out.println("enter data where the node add");
+					int val = sc.nextInt();
+					sl.addatmid(val);
+					break;
+				case 5:
+					sl.count();
+				case 6:
+					sl.deleteatstart();
+					break;
+				case 7:
+					sl.deleteatend();
+					break;
+				case 8:
+					System.out.println("enter data where the node delete");
+					sl.deleteatmid(sc.nextInt());
+					break;
+				case 9:
+					System.out.println("enter the node before value update or updated value");
+					
+					sl.update(sc.nextInt(), sc.nextInt());
+					break;
+				case 10:
+					sl.reverse();
+					break;
+				case 11:
+					sl.printReverse();
+					break;
+				case 15:
+					sl.display();
+					break;
+				case 0:
+					System.exit(0);
+			}
+			
+			
+		}
+		while(choice !=0);
+	}
+
+}
+
+

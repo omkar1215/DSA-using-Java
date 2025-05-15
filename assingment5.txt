@@ -1,0 +1,95 @@
+package linked_List;
+
+import java.util.Scanner;
+
+class Node3 {
+
+    private String data;
+    private Node3 next;
+    private static int NodeCount = 0;
+
+    public Node3() {
+        ++NodeCount;
+        data = ""; 
+        next = null;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String value) {
+        data = value;
+    }
+
+    public Node3 getNext() {
+        return next;
+    }
+
+    public void setNext(Node3 newNext) { 
+        next = newNext;
+    }
+
+    public static int showNodeCount() {
+        return NodeCount;
+    }
+
+}//class
+
+
+public class AlphaLinkedList {
+
+    private Node3 head;
+
+    public AlphaLinkedList() {
+        head = null; // 
+    }
+
+    // Method to create new node
+    private Node3 createNewnode(String data) { 
+        Node3 newnode = new Node3();
+        newnode.setData(data); 
+        newnode.setNext(null); 
+        return newnode;
+    }
+
+    public void add(Node3 newnode1) {
+        if (head == null) {
+            head = newnode1;
+
+        } else {
+            newnode1.setNext(head);
+            head = newnode1;
+        }
+    }
+
+    public void display() {
+        Node3 temp = head;
+
+        if (head == null) {
+            System.out.println("\n\tLinked List is empty....!!!\n");
+        } else {
+            while (temp != null) {
+                System.out.print(" " + temp.getData() + " -> ");
+                temp = temp.getNext();
+            }
+            System.out.println("NULL");
+        }
+    }
+
+    public static void main(String[] args) {
+        AlphaLinkedList l1 = new AlphaLinkedList();
+
+
+        for (char c = 'A'; c <= 'Z'; c++) {
+            String charStr = String.valueOf(c); // Convert char to String
+            Node3 newnode = l1.createNewnode(charStr); // Pass data to createNewnode
+            l1.add(newnode);
+        }
+
+        l1.display();
+
+
+    }
+
+}

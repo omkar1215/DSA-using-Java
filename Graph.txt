@@ -1,0 +1,132 @@
+//Graph.java
+package Graph1;
+
+import java.util.Scanner;
+
+public class Graph {
+	private int arr[][];
+	private int nofnodes;
+	Scanner sc = new Scanner(System.in);
+
+	public Graph() {
+		System.out.println("Enter number of vertices: ");
+		nofnodes = sc.nextInt();
+		arr = new int[nofnodes][nofnodes];
+
+	}
+
+	public void createGraph() {
+		for (int i = 0; i < nofnodes; i++) {
+			System.out.println("\nEnter adjaceny for "+(i+1)+ " :: ");
+			for (int j = 0; j < nofnodes; j++) {
+				System.out.println("\t" +(i+1)+ "->"+(j+1)+ " : ");
+				int val = sc.nextInt();
+				if (val == 1 || val == 0)
+					arr[i][j] = val;
+				else
+					System.out.println("\n\t cant accept");
+			}
+		}
+	}
+
+	public void adjacencyMatrix() {
+		System.out.println("\nAdjacency Matrix : ");
+		for (int i = 0; i < nofnodes; i++) {
+			for (int j = 0; j < nofnodes; j++) {
+				System.out.print(" " + arr[i][j]);
+			}
+			System.out.println("");
+		}
+	}
+
+	public void DFS() {
+		int i, j, k = 0, visited[];
+
+		visited = new int[nofnodes];		
+		for(i = 0;i < nofnodes;i++)
+			visited[i] = 0;
+
+		for(i = 0; i<nofnodes; i++)  
+		{
+			if(visited[i]==0)
+			{
+			     System.out.print("  "+(i+1));
+			}
+			visited[i] = 1;
+			k=i;
+			for(j = 0; j<nofnodes;)
+			{
+				if(arr[k][j] != 0)
+				{
+					if(visited[j] == 0)
+					{
+						System.out.print("  "+(j+1));
+						visited[j] = 1;
+						k = j;
+						j = 0;
+					}
+					else  j++;
+				}
+				else  j++;
+			}
+		}
+		for (; i < nofnodes; i++)
+			System.out.print("  "+(i+1));
+	}
+
+	public void BFS() {
+		int i, j, k = 0, visited[];
+		visited = new int[nofnodes];
+		for (i = 0; i < nofnodes; i++) {
+			visited[i] = 0;
+		}
+		for (i = 0; i < nofnodes; i++) {
+			visited[i] = 1;
+			for (j = 0; j < nofnodes;) {
+				if (arr[i][j] != 0) {
+					if (visited[j] == 0) {
+						System.out.println(" " + (j + 1));
+						visited[j] = 1;
+					} else
+						j++;
+				} else
+					j++;
+			}
+		}
+	}
+}
+
+//GraphClient.java
+package Graph1;
+
+import java.util.Scanner;
+
+public class GraphClient {
+	public static void main(String[] agrs)  {
+		Graph gp=new Graph();
+		Scanner sc=new Scanner(System.in);
+		int choice=-99;
+		while(choice!=0) {
+			System.out.println(" ");
+			System.out.println("Enter Choice: \n1: Create Graph\n2: Display Adjaceny matrix\n3: DFS\n4: BFS");
+			choice=sc.nextInt();
+			switch(choice) {
+			case 1:
+				gp.createGraph();
+				break;
+			case 2:
+				gp.adjacencyMatrix();
+				break;
+			case 3:
+				gp.DFS();
+				break;
+			case 4:
+				gp.BFS();
+				break;
+			case 0:
+				System.exit(0);
+			}
+		}
+	}
+}
+

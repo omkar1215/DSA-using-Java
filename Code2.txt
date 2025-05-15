@@ -1,0 +1,62 @@
+//ReverseOrder.java
+
+package dsa;
+
+public class ReverseOrder {
+	private int size;
+	private String arr[];
+	private int top;
+	public void initStack(int s) {
+		size=s;
+		arr=new String[size];
+		top=-1;
+	}
+	public boolean isEmpty() {
+		return top==-1;
+	}
+	public boolean isFull() {
+		return top==size-1;
+	}
+	public void push(String string) {
+		if(!isFull()) {
+			arr[++top]=string;
+		}else {
+			System.out.println("Stack OverFlow!!");
+		}
+	}
+	public String pop() {
+		String val=null;
+		if(!isEmpty()) {
+			val=arr[top--];
+		}else {
+			System.out.println("Stack OverUnder!!");
+		}
+		return val;
+	}
+	public void display() {
+		if(!isEmpty()) {
+			for(int i=top;i>-1;i--) {
+				System.out.println(arr[i]);
+			}
+		}
+	}
+}
+
+
+----------------------------------------------------------------------------------------------------------
+//ReverseOrderClient.java
+
+package dsa;
+
+import java.util.Scanner;
+
+public class ReverseOrderClient {
+	public static void main(String[] args) {
+		ReverseOrder RO=new ReverseOrder();
+		RO.initStack(26);
+		for(int i=65;i<=92;i++) {
+			RO.push(Character.toString((char)i));
+		}
+		RO.display();
+	}
+}

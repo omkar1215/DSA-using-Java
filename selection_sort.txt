@@ -1,0 +1,54 @@
+package sorting;
+
+import java.util.Scanner;
+
+public class SelectionSort {
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Enter size:");
+		int size = sc.nextInt();
+		
+		int arr[] = new int[size];
+		System.out.print("\nEnter elements:\n");
+		for(int i = 0;i<size;i++) {
+			arr[i] = sc.nextInt();
+		}
+		
+		System.out.print("normal array:\n");
+		for(int i=0;i<size;i++) {
+			System.out.print("\t"+arr[i]);
+		}
+		
+		
+		//algorithm
+		
+		for(int i=0;i<size-1;i++) {
+			int small = i;
+			for(int j=i+1;j<size;j++) {
+				if(arr[j]<arr[small]) {
+					small = j;
+				}
+			}
+			int temp;
+			if(i!=small) {
+				temp = arr[i];
+				arr[i] = arr[small];
+				arr[small] = temp;
+			}
+		}
+		
+		
+		System.out.print("\nsorted array:\n");
+		for(int i=0;i<size;i++) {
+			System.out.print("\t"+arr[i]);
+		}
+		
+		
+		
+	}
+
+}

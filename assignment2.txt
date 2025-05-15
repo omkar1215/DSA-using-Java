@@ -1,0 +1,365 @@
+
+
+import java.util.Scanner;
+
+class Node {
+
+    private int data;
+    private Node next;
+
+    public Node() {
+        data = 0;
+        next = null;
+    }
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int value) {
+        data = value;
+    }
+
+    public Node getNext() {
+        return next;
+    }
+
+    public void setNext(Node newNext) { // Changed parameter name to newNext
+        next = newNext;
+    }
+}
+
+public class SinglyLinkedList {
+
+    private Node head;
+
+    public SinglyLinkedList() {
+        head = null;
+    }
+
+    public void setHead(Node newnode) {
+        head = newnode;
+    }
+
+    // method to create newnode
+    public Node createNewnode() {
+        // Step1:  allocate memory for newnode at runtime
+        Node newnode = new Node();
+        // Step 2: set Data
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nEnter data:: ");
+        newnode.setData(sc.nextInt());
+        // Step3:: set Next to null
+        newnode.setNext(null);
+
+        return newnode;
+    }//createNode
+
+    public void addAtStart() {
+        Node newnode = createNewnode();
+
+        if (head == null) {
+            head = newnode;
+        } else {
+            newnode.setNext(head); //connect newnode with head 
+            head = newnode; //shift head to newnode
+        }
+
+    }//addStart
+
+    public void addAtEnd() {
+        Node newnode = createNewnode();
+        Node temp = null;
+
+        if (head == null) {
+            head = newnode;
+        } else {
+            temp = head;
+            while (temp.getNext() != null) //traverse and find out the last node
+            {
+                temp = temp.getNext();
+            }
+            //connect newnode to last node i.e. temp
+            temp.setNext(newnode);
+        }
+
+    }//addEnd
+
+    public void addAtMid(int value) {
+        Node newnode = createNewnode();
+        Node temp = null;
+
+        //case 1 LL is empty
+        if (head == null) {
+            head = newnode;
+        } //case 2:: Only one node exists
+        else if (head.getNext() == null) {
+            //case 2.1: node with value exists
+            if (head.getData() == value) {
+                head.setNext(newnode);
+            } //case 2.2:
+            else {
+                System.out.println("\tError::Node not exists....!!!!");
+            }
+        } else //case 3:: LL contains multiple node
+        {
+            temp = head;
+            //search for valid node until end of LL
+            while (temp != null && temp.getData() != value) {
+                temp = temp.getNext();
+            }
+            //check if temp contains address of valid node
+            if (temp != null) {
+                //step a: connect newnode with temp's adjacent node
+                newnode.setNext(temp.getNext());
+                //step b: connect temp and newnode
+                temp.setNext(newnode);
+            } else {
+                System.out.println("\tError::Node not exists....!!!!");
+            }
+
+        }//else
+
+    }//addMid
+
+    public void deleteAtStart() {
+        Node temp = head;
+
+        if (head == null) {
+            System.out.println("\n\tLinked list is empty...!!");
+        } else {
+            head = head.getNext();
+            temp.setNext(null);
+            //release temp
+        }
+    }
+
+    public void deleteAtEnd() {
+        Node temp = head;
+
+        if (head == null) {
+            System.out.println("\n\tLinked List is empty...!!");
+        } else if (head.getNext() == null) //LL existing with single node
+        {
+            head = null;
+            //release temp
+        } else //LL with multiple nodes
+        {
+            //traverse to search 2nd-last node
+            while (temp.getNext().getNext() != null) {
+                temp = temp.getNext();
+            }
+
+            //d-link 2nd-lst node with last node
+            temp.setNext(null);
+            //release temp
+        }
+
+    }//deleteEnd
+
+    public void deleteAtMid(int value) {
+        Node temp = head;
+        Node tag = null; // To store the previous node
+
+        if (head == null) {
+            System.out.println("\n\tLinked List is empty....!!!\n");
+        } else if (head.getNext() == null) //LL with single node
+        {
+            if (head.getData() == value) {
+                head = null;
+                //release temp
+            } else {
+                System.out.println("\n\tNode not found...!!!");
+            }
+        } else {
+            //traverse to find node with value
+            while (temp != null && temp.getData() != value) {
+                tag = temp;  //tag points to preceding node
+                temp = temp.getNext();
+            }
+            if (temp != null) //node found
+            {
+                tag.setNext(temp.getNext());  //connect tag with temp's adjacent node
+                temp.setNext(null); //dlink temp with its adjacent node
+                //release temp
+            } else {
+                System.out.println("\n\tNode not found...!!!");
+            }
+        }
+
+    }//deleteMid
+
+    public void reverse() {
+        Node prev = head;
+        Node curr = null;
+        Node next = null;
+
+        if (prev != null) {
+            curr = head.getNext();
+        }
+
+        while (curr != null) {
+            next = curr.getNext();  // Store the next node
+            curr.setNext(prev); // Reverse the link
+            prev = curr;         // Move prev to current
+            curr = next;         // Move curr to next
+        }
+
+        //existing head should store null in its next
+        if (head != null) {
+            head.setNext(null);
+        }
+        head = prev; //shift head to last node
+
+    }//reverse
+
+    public void display() {
+        Node temp = head;
+
+        if (head == null) {
+            System.out.println("\n\tLinked List is empty....!!!\n");
+        } else {
+            while (temp != null) {
+                System.out.print(" " + temp.getData() + "->");
+                temp = temp.getNext();
+            }
+            System.out.print("NULL");
+        }//else
+
+    }//display()
+
+    // New Methods Start Here
+
+    public void deleteByValue(int value) {
+        Node temp = head;
+        Node prev = null;
+
+        if (head == null) {
+            System.out.println("\nLinked List is empty. Cannot delete.");
+            return;
+        }
+
+        if (head.getData() == value) { // If the head node contains the value
+            head = head.getNext();
+            return;
+        }
+
+        while (temp != null && temp.getData() != value) {
+            prev = temp;
+            temp = temp.getNext();
+        }
+
+        if (temp == null) {
+            System.out.println("\nNode with value " + value + " not found.");
+        } else {
+            prev.setNext(temp.getNext());
+            temp.setNext(null); // Detach the node
+            System.out.println("\nNode with value " + value + " deleted.");
+        }
+    }
+
+    public void printReverse() {
+        printReverseHelper(head);
+        System.out.println(); // Add a newline after the reversed printing
+    }
+
+    private void printReverseHelper(Node node) {
+        if (node == null) {
+            return;
+        }
+        printReverseHelper(node.getNext());
+        System.out.print(" " + node.getData() + "->");
+    }
+
+    public void update(int oldValue, int newValue) {
+        Node temp = head;
+
+        while (temp != null && temp.getData() != oldValue) {
+            temp = temp.getNext();
+        }
+
+        if (temp == null) {
+            System.out.println("\nNode with value " + oldValue + " not found.  Cannot update.");
+        } else {
+            temp.setData(newValue);
+            System.out.println("\nNode with value " + oldValue + " updated to " + newValue + ".");
+        }
+    }
+
+    public static void main(String[] args) {
+        SinglyLinkedList list = new SinglyLinkedList();
+        Scanner sc = new Scanner(System.in);
+        int choice, value, newValue;
+
+        do {
+            System.out.println("\nSingly Linked List Operations Menu:");
+            System.out.println("1. Add at Start");
+            System.out.println("2. Add at End");
+            System.out.println("3. Add at Mid");
+            System.out.println("4. Delete at Start");
+            System.out.println("5. Delete at End");
+            System.out.println("6. Delete at Mid");
+            System.out.println("7. Delete by Value");
+            System.out.println("8. Reverse");
+            System.out.println("9. Display");
+            System.out.println("10. Print Reverse");
+            System.out.println("11. Update");
+            System.out.println("0. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    list.addAtStart();
+                    break;
+                case 2:
+                    list.addAtEnd();
+                    break;
+                case 3:
+                    System.out.print("Enter the value of the node after which you want to add: ");
+                    value = sc.nextInt();
+                    list.addAtMid(value);
+                    break;
+                case 4:
+                    list.deleteAtStart();
+                    break;
+                case 5:
+                    list.deleteAtEnd();
+                    break;
+                case 6:
+                    System.out.print("Enter the value of the node you want to delete: ");
+                    value = sc.nextInt();
+                    list.deleteAtMid(value);
+                    break;
+                case 7:
+                    System.out.print("Enter the value of the node you want to delete: ");
+                    value = sc.nextInt();
+                    list.deleteByValue(value);
+                    break;
+                case 8:
+                    list.reverse();
+                    break;
+                case 9:
+                    list.display();
+                    break;
+                case 10:
+                    list.printReverse();
+                    break;
+                case 11:
+                    System.out.print("Enter the value of the node you want to update: ");
+                    value = sc.nextInt();
+                    System.out.print("Enter the new value: ");
+                    newValue = sc.nextInt();
+                    list.update(value, newValue);
+                    break;
+                case 0:
+                    System.out.println("Exiting program.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 0);
+
+        sc.close();
+    }
+}

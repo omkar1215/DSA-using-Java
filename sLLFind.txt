@@ -1,0 +1,210 @@
+//Node.java
+package SinglyLL;
+
+public class Node {
+	private int data;
+	private Node next;
+	
+	public Node() {
+		data=0;
+		next=null;
+	}
+	public int getData() {
+		return data;
+	}
+	public void setData(int value) {
+		data=value;
+	}
+	public Node getNext(){
+		return next;
+	}
+	public void setNext(Node newnode) {
+		next=newnode;
+	}
+}
+
+//SinglyLinkedList.java
+package SinglyLL;
+
+import java.util.Scanner;
+
+public class SinglyLinkedList {
+	private Node head;
+	
+	public SinglyLinkedList() {
+		head=null;
+	}
+	
+	public void setHead(Node newnode) {
+		head=newnode;
+	}
+	
+	public Node createNewnode() {
+		Node newnode=new Node();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter data: ");
+		newnode.setData(sc.nextInt());
+		newnode.setNext(null);
+		return newnode;
+	}
+	public void addAtStart() {
+		Node newnode=createNewnode();
+		if(head==null) {
+			head=newnode;
+		}else {
+			newnode.setNext(head);
+			head=newnode;
+		}
+	}
+	public void addAtLast() {
+		Node newnode=createNewnode();
+		if(head==null) {
+			head=newnode;
+		}else {
+			Node temp=head;
+			while(temp.getNext()!=null) {
+				temp=temp.getNext();
+			}
+			temp.setNext(newnode);
+		}
+		
+	}
+    public void addAtMid(int value)
+	{
+		Node newnode = createNewnode();
+		Node temp=null;
+		
+		if(head == null)
+		{
+			head = newnode;
+		}
+		else if(head.getNext() == null)
+		{
+			if(head.getData() == value)
+			     head.setNext(newnode);
+			else 
+				System.out.println("\tError::Node not exists....!!!!");
+		}
+		else
+		{
+			temp = head;
+			while(temp!=null && temp.getData() != value)
+			{
+				temp = temp.getNext();
+			}
+			if(temp!=null)
+			{
+				newnode.setNext(temp.getNext());
+				temp.setNext(newnode);				
+			}
+			else
+			{
+				System.out.println("\tError::Node not exists....!!!!");
+			}
+			
+		}
+				
+	}
+	
+	public void display()
+	{
+		Node temp = head;
+		
+		if(head == null)
+		{
+			System.out.println("\n\tLinked List is empty....!!!\n");
+		}
+		else
+		{
+			while(temp!=null)
+			{
+				System.out.print(" "+temp.getData()+"->");
+				temp = temp.getNext();
+			}
+			System.out.print("NULL");
+		}
+		
+	}
+	public int findMax() {
+		int max=-1;
+		if(head==null) {
+			System.out.println("List is Empty");
+		}else {
+			Node temp=head;
+			while(temp!=null) {
+				if(max<temp.getData()) {
+					max=temp.getData();
+				}
+				temp=temp.getNext();
+			}
+		}
+		return max;	
+	}
+	public int findOccurence(int key) {
+		int count=0;
+		Node temp=head;
+		while(temp!=null) {
+			if(temp.getData()==key) {
+				count++;
+			}
+			temp=temp.getNext();
+		}
+		return count;
+	}
+}
+
+//SinglyLinkedListClient.java
+package SinglyLL;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class SinglyLinkedListClient {
+	public static void main(String[] args) {
+		SinglyLinkedList sl=new SinglyLinkedList();
+		Scanner sc=new Scanner(System.in);
+		int choice=0;
+		do {
+			System.out.println("Enter choice \n1: Create Node\n2: Add at Start\n3: Add at Last.\n4: Add at Mid\n5: Max\n6: Find Occurance");
+			choice=sc.nextInt();
+			switch(choice) {
+			case 1:
+				Node newnode = sl.createNewnode();
+				sl.setHead(newnode);
+				System.out.println("\tNew Linked List created....!!!");
+				break;
+			case 2:
+				sl.addAtStart();
+				break;
+			case 3:
+				sl.addAtLast();
+				break;
+			case 4:
+				int value;
+				System.out.println("\nEnter node after which to add:: ");
+				value = sc.nextInt();
+				sl.addAtMid(value);
+				break;
+			case 5:
+				System.out.println("Max Value in List is: "+sl.findMax());
+				break;
+			case 6:
+				System.out.println("Enter the value you want to find occurence of: ");
+				int key=sc.nextInt();
+				System.out.println(key+" is Occured "+sl.findOccurence(key)+" times.");
+				break;
+			case 99:
+				System.out.println("\n--------------------------\n");
+				sl.display();
+				System.out.println("\n--------------------------\n");
+				break;
+			case 0:
+				System.exit(0);			
+			
+			}
+		}while(choice!=0);
+		
+		}
+	}
+
+

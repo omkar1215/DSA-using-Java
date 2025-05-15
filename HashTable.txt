@@ -1,0 +1,95 @@
+//HashTable.java
+package Hash;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class HashTable {
+	int size;
+	int key;
+	int hashtable[];
+	
+	public HashTable() {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter size: ");
+		size=sc.nextInt();
+		hashtable=new int[size];
+		for(int j=0;j<hashtable.length;j++) {
+			hashtable[j]=-1;
+		}
+	}
+	
+	public int hashKey(int val) {
+		return (val%size);
+	}
+	
+	public void displayHashTable() {
+		System.out.println(Arrays.toString(hashtable));
+	}
+	
+	public void add(int val) {
+		int key=hashKey(val);
+		if(hashtable[key]==-1)       //vacant position
+			hashtable[key]=val;
+		else {                      //occupied position
+			int i=key+1;
+			do {
+				if(hashtable[i]==-1) {
+					hashtable[i]=val;
+					break;
+				}else {
+					i=(i+1)%size;
+				}
+			}while(i!=key);
+			if(i==key)
+				System.out.println("\nHashtable is full");
+		}
+	}
+	public int SearchValue(int val) {
+		int key=-1;
+		key=hashKey(val);
+		if(hashtable[key]==val) {
+			return key;
+		}else {
+			int i;
+			for(i=key+1;i!=key && hashtable[i]!=val;i=(i+1)%size);
+			if(i==key) {
+				System.out.println("\n\tvalue does not exist");
+				return i;
+			}else {
+				return -1;
+			}
+		}
+	}
+	
+	public void delete() {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Value to be delete: ");
+		int val=sc.nextInt();
+		hashtable[hashKey(val)]=-1;
+	}
+	
+}
+
+
+//HashClient.java
+package Hash;
+
+public class HashClient {
+	public static void main(String[] args) {
+		HashTable hash=new HashTable();
+		hash.add(54);
+		hash.add(26);
+		hash.add(93);
+		hash.add(17);
+		hash.add(77);
+		hash.add(31);
+		hash.add(44);
+		hash.add(55);
+		hash.add(20);
+		hash.displayHashTable();
+		System.out.println("Search: "+hash.SearchValue(17));
+		hash.delete();
+		hash.displayHashTable();
+	}
+}

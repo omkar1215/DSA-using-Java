@@ -1,0 +1,108 @@
+//Node.java
+package queue;
+
+public class Node {
+	private int data;
+	private Node next;
+	public Node() {
+		data=0;
+		next=null;
+	}
+	public int getData() {
+		return data;
+	}
+	public void setData(int data) {
+		this.data = data;
+	}
+	public Node getNext() {
+		return next;
+	}
+	public void setNext(Node next) {
+		this.next = next;
+	}
+	
+}
+
+//QueueLL.java
+package queue;
+
+public class QueueLL {
+	private Node rear;
+	private Node front;
+	public QueueLL() {
+		rear=null;
+		front=null;
+	}
+	public Node createNode(int val){
+		Node newnode=new Node();
+		newnode.setData(val);
+		newnode.setNext(null);
+		return newnode;
+	}
+	public boolean isEmpty() {
+		return front==null;
+	} 
+	public void enQueue(int val) {
+		Node newnode=createNode(val);
+		if(isEmpty()) {
+			front=rear=newnode;
+		}else {
+			rear.setNext(newnode);
+			rear=newnode;
+		}
+	}
+	public int deQueue() {
+		int val=-1;
+		if(isEmpty()){
+			System.out.println("Queue is Empty!!");
+		}else {
+			Node temp=front;
+			val=front.getData();
+			front=front.getNext();
+			temp=null;
+		}
+		return val;
+	}
+	public void Display() {
+		if(front==null) {
+			System.out.println("Queue is Empty!!");
+		}else {
+			Node temp=front;
+			while(temp!=null) {
+				System.out.print(temp.getData()+" ");
+				temp=temp.getNext();
+			}
+		}
+	}
+}
+
+//QueueLLClient.java
+package queue;
+
+import java.util.Scanner;
+
+public class QueueLLClient {
+	public static void main(String[] args) {
+		QueueLL ql=new QueueLL();
+		Scanner sc=new Scanner(System.in);
+		int choice=-99;
+		while(choice!=0) {
+			System.out.println("\nEnter your choice: \n1: Enqueue \n2: Dequeue \n3: Display \n0: Exit");
+			choice=sc.nextInt();
+			switch(choice) {
+			case 1:
+				System.out.println("Enter number: ");
+				ql.enQueue(sc.nextInt());
+				break;
+			case 2:
+				System.out.println("Dequeue: "+ql.deQueue());
+				break;
+			case 3:
+				ql.Display();
+				break;
+			case 0:
+				System.exit(0);
+			}
+		}
+	}
+}

@@ -1,0 +1,219 @@
+//Node.java
+
+package SinglyLinkedList;
+
+public class Node {
+
+	private int data;
+	private Node next;
+	
+	public Node() {
+		data=0;
+		next=null;
+		
+	}
+	
+	public int getData() {
+		return data;
+	}
+	
+	public void setData(int value) {
+		data=value;
+	}
+	
+	public Node getNext(){
+		return next;
+	}
+	
+	public void setNext(Node newnode) {
+		next=newnode;
+	}
+	
+	
+}
+
+
+//SinglyLinkedList
+package SinglyLinkedList;
+
+import java.util.Scanner;
+
+public class SinglyLinkedListPractice {
+	private Node head;
+
+	public SinglyLinkedListPractice() {
+		head=null;
+	}
+	
+	
+	public void setHead(Node newnode) {
+		head=newnode;
+	}
+	
+	
+	
+	// this is to create a newnode
+	
+	public Node createNewnode() {
+		Node newnode= new Node();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the Data");
+		newnode.setData(sc.nextInt());
+		newnode.setNext(null);
+		return newnode;
+	}
+	
+	public void addAtStart() {
+		Node newnode= createNewnode();
+		
+		if(head==null) {
+			head=newnode;
+		}
+		else {
+			newnode.setNext(head);// connect the newnode with head
+			head=newnode;//shift head to newnode
+		}
+	}
+	
+	public void addAtEnd() {
+		Node newnode= createNewnode();
+		Node temp=null;
+		
+		if(head==null) {
+			head=newnode;
+		}
+		else {
+			temp = head;
+			while(temp.getNext()!=null) {     // to travese to the last node 
+				temp=temp.getNext();
+			}
+			temp.setNext(newnode);// then Connect the last node i.e temp;
+		}
+		
+	}
+	
+	public void addAtMid(int value) {
+		Node newnode= createNewnode();
+		Node temp=null;
+		if(head ==null) {
+			head= newnode;
+		}
+		
+		else if(head.getNext()==null) 
+		{
+			if(head.getData()==value) 
+			{
+				head.setNext(newnode);
+			}
+			else
+				System.out.println("\nError :: Node not Exists");
+		}
+		else {
+			temp=head;
+			while(temp!=null && temp.getData()!=value) {
+				temp =temp.getNext();
+				
+			}
+			
+			if(temp!=null) {
+				newnode.setNext(temp.getNext());
+				temp.setNext(newnode);
+			}
+			else {
+				System.out.println("Error:Node not exist.....!!!!");
+			}
+		}
+	}
+	
+	public int getCount(){
+		int count=0;
+        Node temp=head;
+        if(temp==null) {
+        	System.out.println("Empty List");
+        	
+        }
+        
+        else {
+        	while(temp!=null) {
+        		count++;
+        		temp=temp.getNext();
+        	}
+        }
+        return count;
+	}
+	
+	
+	public void display() {
+		Node temp= head;
+		
+		if(head==null) {
+			System.out.println("Empty List");
+		}
+		else
+		{
+			while(temp!=null) {
+				System.out.println(""+temp.getData());
+				temp=temp.getNext();
+			}
+			
+		}//else
+	}//display()
+	
+}//class 
+
+//SinglyLinkedListClient.java
+package SinglyLinkedList;
+
+import java.util.Scanner;
+
+public class SinglyLinkedListClient {
+
+	public static void main(String[] args) {
+	
+		SinglyLinkedListPractice s1=new SinglyLinkedListPractice();
+		Scanner sc=new Scanner(System.in);
+		
+		int choice=0;
+	do {	
+		System.out.println("\n--------Menu---------");
+		System.out.println("\n1:Start"+"\n2:Add at Start"+"\n3:Add at End"+"\n4:Display"+"\n5AddAtMid"+"\n6:Count"+"\n0:Exit");
+		System.out.println("Enter your choice");
+		choice=sc.nextInt();
+		
+		switch(choice) {
+		case 1: Node newnode=s1.createNewnode();
+		        s1.setHead(newnode);
+		        System.out.println("New Linked List Created ..................");
+		        break;
+		   
+		case 2: s1.addAtStart();
+		            break;
+		          
+		case 3: s1.addAtEnd();
+		            break;
+		            
+		case 4: System.out.println("--------------------------------------");
+			    s1.display();
+			    System.out.println("---------------------------------------");
+		           break;
+		      
+		case 5: int value;
+		System.out.println("\n Enter node after which to add it::");
+		value=sc.nextInt();
+		s1.addAtMid(value);
+		break;
+		
+		case 6:System.out.println("The Count is"); 
+			   System.out.println(s1.getCount());
+			   break;
+		            
+		case 0: System.exit(0);
+		            
+		            
+		 }
+		
+
+	}while(choice!=0);
+	}
+
+}

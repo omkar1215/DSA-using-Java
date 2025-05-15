@@ -1,0 +1,121 @@
+//Node.java
+package mergeLL;
+
+public class Node {
+	private int data;
+	private Node next;
+	public Node() {
+		data=0;
+		next=null;
+	}
+	public int getData() {
+		return data;
+	}
+	public void setData(int data) {
+		this.data = data;
+	}
+	public Node getNext() {
+		return next;
+	}
+	public void setNext(Node next) {
+		this.next = next;
+	}
+	
+}
+
+//SLL.java
+package mergeLL;
+
+public class SLL {
+	private Node head;
+	public SLL() {
+		head=null;
+	}
+	
+	public Node getHead() {
+		return head;
+	}
+
+	public void setHead(Node head) {
+		this.head = head;
+	}
+
+	public Node createNode(int val) {
+		Node newnode=new Node();
+		newnode.setData(val);
+		newnode.setNext(null);
+		return newnode;
+	}
+	public void add(int val) {
+		Node newnode=createNode(val);
+		if(head==null) {
+			head=newnode;
+		}else {
+			Node temp=head;
+			while(temp.getNext()!=null) {
+				temp=temp.getNext();
+			}
+			temp.setNext(newnode);
+		}
+	}
+	public void display() {
+		if(head==null) {
+			System.out.println("List is Empty");
+		}else {
+			Node temp=head;
+			while(temp!=null) {
+				System.out.print(temp.getData()+"->");
+				temp=temp.getNext();
+			}
+			System.out.print("NULL");
+			System.out.println(" ");
+		}
+	}
+}
+
+//SortLL.java
+package mergeLL;
+
+public class SortLL {
+	public SortLL(SLL l1) {
+		SLL evenLL = new SLL();
+		SLL oddLL = new SLL();
+		Node head = l1.getHead();
+		if (head == null) {
+			System.out.println("List is Null");
+		} else {
+			while (head != null) {
+				if (head.getData() % 2 == 0) {
+					evenLL.add(head.getData());
+				} else {
+					oddLL.add(head.getData());
+				}
+				head = head.getNext();
+			}
+		}
+		System.out.println("Even List:");
+		evenLL.display();
+		System.out.println("Odd List:");
+		oddLL.display();
+	}
+}
+
+//SortListClient.java
+package mergeLL;
+
+import java.util.Scanner;
+
+public class SortListClient {
+	public static void main(String[] args) {
+		SLL sl=new SLL();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter no. of nodes you want to enter: ");
+		int len=sc.nextInt();
+		System.out.println("Enter "+len+" numbers:");
+		for(int i=0;i<len;i++) {
+			sl.add(sc.nextInt());
+		}
+		SortLL sortLL=new SortLL(sl);
+		
+	}
+}
